@@ -1,0 +1,5 @@
+USE [master]
+GO
+ 
+
+ALTER DATABASE [model] SET RECOVERY SIMPLE WITH NO_WAIT; 
