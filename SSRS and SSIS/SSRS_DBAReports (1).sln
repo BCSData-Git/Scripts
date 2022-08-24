@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "SSRS_DBAReports", "SSRS_DBAReports\SSRS_DBAReports.rptproj", "{B3D904FA-8916-49B9-863B-8C1122280425}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Debug|Default.ActiveCfg = Debug
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Debug|Default.Build.0 = Debug
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Debug|Default.Deploy.0 = Debug
+		{B3D904FA-8916-49B9-863B-8C1122280425}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{B3D904FA-8916-49B9-863B-8C1122280425}.DebugLocal|Default.Build.0 = DebugLocal
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Release|Default.ActiveCfg = Release
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Release|Default.Build.0 = Release
+		{B3D904FA-8916-49B9-863B-8C1122280425}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {17225A69-E193-4C57-829B-9546620EAADF}
+	EndGlobalSection
+EndGlobal
