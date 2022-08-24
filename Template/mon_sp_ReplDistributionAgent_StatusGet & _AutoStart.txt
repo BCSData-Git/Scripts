@@ -1,0 +1,293 @@
+USE [Maintenance]
+GO
+/****** Object:  StoredProcedure [dbo].[mon_sp_ReplDistributionAgent_StatusGet]    Script Date: 7/8/2022 3:45:42 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+/*
+Description : Check continous distributor agent to see if it stopped or running
+*/
+
+ALTER PROCEDURE [dbo].[mon_sp_ReplDistributionAgent_StatusGet]    
+@pRecipients varchar(255) = 'youremail@yourcompany.com'  
+AS  
+begin
+
+SET NOCOUNT ON;  
+SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;  
+-- drop table #jobStatus
+DECLARE @is_sysadmin INT  
+DECLARE @job_owner   sysname  
+DECLARE @job_id uniqueidentifier  
+DECLARE @job_name sysname  
+DECLARE @running int   
+DECLARE @cnt int  
+DECLARE @msg varchar(8000)  
+DECLARE @msg_header varchar(4000)  
+DECLARE @categoryid int   
+
+SELECT  @job_owner =   SUSER_SNAME()  
+     ,@is_sysadmin = 1   
+     ,@running = 0  
+     ,@categoryid = 10 -- Distributor jobs  
+
+CREATE TABLE #jobStatus (job_id  UNIQUEIDENTIFIER NOT NULL,  
+                last_run_date         INT ,  
+                last_run_time         INT ,  
+                next_run_date         INT ,  
+                next_run_time         INT ,  
+                next_run_schedule_id  INT ,  
+                requested_to_run      INT ,   
+                request_source        INT ,  
+                request_source_id     sysname COLLATE database_default NULL,  
+                running               int ,  
+                current_step          INT ,  
+                current_retry_attempt INT ,  
+                job_state             INT)  
+
+  INSERT INTO #jobStatus  
+  EXECUTE master.dbo.xp_sqlagent_enum_jobs @is_sysadmin, @job_owner--, @job_id   
+   
+
+select j.name, js.command, jss.running
+from msdb.dbo.sysjobsteps js
+	join msdb.dbo.sysjobs j on js.job_id = j.job_id
+	join #jobStatus jss on js.job_id = jss.job_id
+where step_id = 2 and subsystem = 'Distribution'
+	--and command like '%-Continuous'
+	and jss.running <> 1 -- Not running
+
+ if @@ROWCOUNT > 0
+ BEGIN  
+ 
+  SELECT @msg_header = 'Distributor job(s) FAILING OR STOPPED. Please check replication job(s) ASAP.'  
+  SELECT @msg_header = @msg_header + char(10)  
+    SELECT @msg_header = @msg_header + 'Here is the list of Job(s) that are failing or stopped'
+  SELECT @msg_header = @msg_header + char(10)   
+  SELECT @msg_header = @msg_header + '****************************************************************************'   
+  
+  set @msg = ''
+	select @msg = @msg + CHAR(10) + j.name
+	from msdb.dbo.sysjobsteps js
+		join msdb.dbo.sysjobs j on js.job_id = j.job_id
+		join #jobStatus jss on js.job_id = jss.job_id
+	where step_id = 2 and subsystem = 'Distribution'
+		and command like '%-Continuous'
+		and jss.running <> 1 -- Not running
+	
+    
+  SELECT @msg = @msg_header + char(10) + nullif(@msg,'')  
+  
+  print @msg
+     
+  --if @@version like 'Microsoft SQL Server  2000%'  
+  --   exec master.dbo.xp_sendmail @profile_name = 'SQLAlerts',                   
+  --   @recipients= @pRecipients , --'youremail@yourcompany.com',  
+  --   @subject='Production Replication Distribution Agent Alert',  
+  --   @message = @msg,  
+  --     @width = 100    
+  --else   
+    exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+     @recipients= @pRecipients , --'youremail@yourcompany.com',  
+     @subject= 'Production Replication Distribution Agent Alert',  
+     @body = @msg 
+
+	Exec [mon_sp_ReplDistributionAgent_AutoStart] @pRecipients = 'sqlalerts@alder.com'
+
+ END  
+
+drop table #jobStatus
+
+end
+
+go
+
+USE [Maintenance]
+GO
+/****** Object:  StoredProcedure [dbo].[mon_sp_ReplDistributionAgent_AutoStart]    Script Date: 7/8/2022 3:46:34 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Chris Becker
+-- Create date: 7/8/2022
+-- Description:	Restarts stopped distribution agents
+--
+-- Exec [mon_sp_ReplDistributionAgent_AutoStart] @pRecipients = 'chris.b@alder.com'
+-- =============================================
+ALTER PROCEDURE [dbo].[mon_sp_ReplDistributionAgent_AutoStart]  
+@pRecipients varchar(255) = 'youremail@yourcompany.com'  
+
+AS
+BEGIN
+	  
+	-- drop table #jobStatus
+	DECLARE @is_sysadmin INT  
+	DECLARE @job_owner   sysname  
+	DECLARE @job_id uniqueidentifier  
+	DECLARE @job_name sysname  
+	DECLARE @running int   
+	DECLARE @cnt int  
+	DECLARE @msg varchar(8000)  
+	DECLARE @msg_header varchar(4000)  
+	DECLARE @categoryid int  
+
+	SELECT  @job_owner =   SUSER_SNAME()  
+		 ,@is_sysadmin = 1   
+		 ,@running = 0  
+		 ,@categoryid = 10 -- Distributor jobs  
+
+	CREATE TABLE #jobStatus (job_id  UNIQUEIDENTIFIER NOT NULL,  
+					last_run_date         INT ,  
+					last_run_time         INT ,  
+					next_run_date         INT ,  
+					next_run_time         INT ,  
+					next_run_schedule_id  INT ,  
+					requested_to_run      INT ,   
+					request_source        INT ,  
+					request_source_id     sysname COLLATE database_default NULL,  
+					running               int ,  
+					current_step          INT ,  
+					current_retry_attempt INT ,  
+					job_state             INT)  
+
+	  INSERT INTO #jobStatus  
+	  EXECUTE master.dbo.xp_sqlagent_enum_jobs @is_sysadmin, @job_owner--, @job_id   
+   
+	Declare @jobName varchar(500)
+	declare @sqlcmd nvarchar(4000) 
+
+	Declare c Cursor For
+	select j.name 
+	from msdb.dbo.sysjobsteps js
+		join msdb.dbo.sysjobs j on js.job_id = j.job_id
+		join #jobStatus jss on js.job_id = jss.job_id
+	where step_id = 2 and subsystem = 'Distribution'
+		--and command like '%-Continuous'
+		and jss.running <> 1 -- Not running
+
+	Open c 
+	Fetch Next From c Into @jobName
+
+	While @@FETCH_STATUS = 0 
+	Begin
+
+		--VSQLSERVER-AspenCoveProd-AspenCoveProd_Pub-VREPORTSERVER-9	 
+		If @jobName like '%VSQLSERVER-AspenCoveProd-AspenCoveProd_Pub-VREPORTSERVER%'
+		Begin
+			set @sqlcmd = N' use AspenCoveProd;exec sp_startpushsubscription_agent
+				@publication = ''AspenCoveProd_Pub'',
+				@subscriber = ''VREPORTSERVER'',
+				@subscriber_db = ''AspenCoveProd_ReadOnly'''
+				exec(@sqlcmd)
+				--print @jobName
+				--print @sqlcmd
+
+			Set @msg = @jobName + ' Restarted.'
+				exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+					@recipients= @pRecipients , --'youremail@yourcompany.com',  
+					@subject= 'Production Replication Distribution Agent Auto Start Alert',  
+					@body = @msg 
+
+		End
+	 
+	  
+		--VSQLSERVER-AspenProd-AspenProd_Azure_Pub-GENESISDB01.WESTUS2.C-24
+		If @jobName like '%VSQLSERVER-AspenProd-AspenProd_Azure_Pub-GENESISDB01.WESTUS2%'
+		Begin
+			set @sqlcmd = N' use AspenProd;exec sp_startpushsubscription_agent
+				@publication = ''AspenProd_Azure_Pub'',
+				@subscriber = ''GENESISDB01.WESTUS2.CLOUDAPP.AZURE.COM'',
+				@subscriber_db = ''Source_AspenProd'''
+				exec(@sqlcmd)
+				--print @jobName
+				--print @sqlcmd
+
+			Set @msg = @jobName + ' Restarted.'
+				exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+					@recipients=  @pRecipients , --'youremail@yourcompany.com',  
+					@subject= 'Production Replication Distribution Agent Auto Start Alert',  
+					@body = @msg 
+		End
+
+	
+		--VSQLSERVER-AspenProd-AspenProd_Pub-VREPORTSERVER-28
+		If @jobName like '%VSQLSERVER-AspenProd-AspenProd_Pub-VREPORTSERVER%'
+		Begin
+			set @sqlcmd = N' use AspenProd;exec sp_startpushsubscription_agent
+				@publication = ''AspenProd_Pub'',
+				@subscriber = ''VREPORTSERVER'',
+				@subscriber_db = ''AspenProd_Reports'''
+				exec(@sqlcmd)
+				--print @jobName
+				--print @sqlcmd
+
+			Set @msg = @jobName + ' Restarted.'
+				    exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+					 @recipients= @pRecipients , --'youremail@yourcompany.com',  
+					 @subject= 'Production Replication Distribution Agent Auto Start Alert',  
+					 @body = @msg 
+		End
+
+	 
+
+
+		--VSQLSERVER-Residual_2019-Residual_2019_Azure_P-GENESISDB01.WESTUS2.C-25 
+		If @jobName like '%VSQLSERVER-Residual_2019-Residual_2019_Azure_P-GENESISDB01.WESTUS2%'
+		Begin
+			set @sqlcmd = N' use Residual_2019;exec sp_startpushsubscription_agent
+				@publication = ''Residual_2019_Azure_Pub'',
+				@subscriber = ''GENESISDB01.WESTUS2.CLOUDAPP.AZURE.COM'',
+				@subscriber_db = ''Source_Residual2019'''
+				exec(@sqlcmd)
+				--print @jobName
+				--print @sqlcmd
+
+			Set @msg = @jobName + ' Restarted.'
+				    exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+					 @recipients = @pRecipients , --'youremail@yourcompany.com',  
+					 @subject= 'Production Replication Distribution Agent Auto Start Alert',  
+					 @body = @msg 
+
+		End
+
+	
+		--VSQLSERVER-Residual_2019-Residual_2019_Pub-VREPORTSERVER-6
+		If @jobName like '%VSQLSERVER-Residual_2019-Residual_2019_Pub-VREPORTSERVER%'
+		Begin
+			set @sqlcmd = N' use Residual_2019;exec sp_startpushsubscription_agent
+				@publication = ''Residual_2019_Pub'',
+				@subscriber = ''VREPORTSERVER'',
+				@subscriber_db = ''Residual_2019_ReadOnly'''
+				exec(@sqlcmd)
+				--print @jobName
+				--print @sqlcmd
+
+			Set @msg = @jobName + ' Restarted.'
+				    exec msdb.dbo.sp_send_dbmail @profile_name = 'SQLAlerts',                     
+					 @recipients= @pRecipients , --'youremail@yourcompany.com',  
+					 @subject= 'Production Replication Distribution Agent Auto Start Alert',  
+					 @body = @msg  
+
+
+
+		End
+	 
+
+
+
+		Fetch Next From c Into @jobName
+
+	End
+
+	Close c
+	Deallocate c
+
+	drop table #jobStatus
+
+
+END

@@ -1,0 +1,6 @@
+\\VSQLSERVER2\dbBak\VSQLSERVER
+BACKUP DATABASE AspenProd TO  DISK = N'\\VSQLSERVER2\dbBak\VSQLSERVER\AspenProd_REpl.bak' WITH  INIT ,  COMPRESSION, NOUNLOAD 
+	,  NAME = N'AspenProd Full backup',  NOSKIP ,  STATS = 10,  NOFORMAT
+
+BACKUP LOG [fxDB6_Ops] TO  DISK = N'N:\bkdata\fxDB6_Ops_TranLog.bak'  WITH  INIT ,  NOUNLOAD 
+	,  NAME = N'fxDB6_Ops Tran Log Backup With INIT',  NOSKIP ,  STATS = 10,  NOFORMAT 

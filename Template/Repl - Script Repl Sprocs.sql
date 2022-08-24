@@ -1,0 +1,1 @@
+Exec sp_scriptpublicationcustomprocs @publication = 'AspenProd_Pub'  
