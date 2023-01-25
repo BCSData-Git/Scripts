@@ -141,7 +141,7 @@ BEGIN
 
 			EXEC msdb..sp_send_dbmail
 				@profile_name =  'SQLAlerts', 
-				@recipients = 'sqlalerts@3plcentral.com', --'cbecker.contractor@3plcentral.com;', 
+				@recipients = 'chrisb@bcsdata.net',  
 				@subject = @subj, --'Long Running Job Alert',
 				@body = @tableHTML,
 				@body_format = 'HTML',
