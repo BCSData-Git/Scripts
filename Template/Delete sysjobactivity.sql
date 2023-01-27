@@ -1,17 +1,3 @@
-Select * From msdb.dbo.sysjobactivity
-where start_execution_date = 'Jan 14 2023 2:00AM'
-
-
-delete from msdb.dbo.sysjobactivity 
-where session_id = 17 and job_id = '4A5FA973-8239-47D5-88B3-AB11FDA587A4'
-
-
-
-
-
---create temp table find pattern ones that are NULL are last_executed_step_id, last_executed_step_date, stop_execution_date, job_history_id,
--- next_scheduled_run_date
---then create delete that joins tmp table to sysjobactivity with jobid or session id or both
 
 
 Create Table #tmp(
