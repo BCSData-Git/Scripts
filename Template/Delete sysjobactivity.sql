@@ -21,7 +21,7 @@ where start_execution_date < GETDATE()-3 and stop_execution_date is NULL
 
 
 Delete s
-from dbo.sysjobactivity s 
+from msdb.dbo.sysjobactivity s 
  join #tmp t ON t.session_id = s.session_id and t.job_id = s.job_id
 
  
