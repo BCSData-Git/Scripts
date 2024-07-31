@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:DelayValidation="True"
+  DTS:ObjectName="VSQLSERVER.Maintenance"
+  DTS:DTSID="{63655E3F-C28A-4B39-B04E-8246252CA18F}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=AWS-SQL04.ADA-CS.COM;Initial Catalog=SQLMon;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{63655E3F-C28A-4B39-B04E-8246252CA18F}VSQLSERVER.Maintenance;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

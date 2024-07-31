@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="RR-SQL01.ADA-CS.COM.SQLMon"
+  DTS:DTSID="{4436097F-9B30-4DBB-9502-20A3E1AB0EAC}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=RR-SQL01.ADA-CS.COM;Initial Catalog=SQLMon;Integrated Security=True;Application Name=SSIS-SSIS_BCSMonitoring-{4436097F-9B30-4DBB-9502-20A3E1AB0EAC}RR-SQL01.ADA-CS.COM.SQLMon;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

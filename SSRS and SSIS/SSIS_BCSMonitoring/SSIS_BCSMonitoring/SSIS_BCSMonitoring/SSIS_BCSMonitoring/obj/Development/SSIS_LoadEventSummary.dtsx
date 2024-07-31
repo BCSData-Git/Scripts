@@ -1,0 +1,983 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/7/2016 10:46:12 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="VDEVSERVER"
+  DTS:CreatorName="APTSAFE\chris.b"
+  DTS:DTSID="{596A6AF2-7166-4006-9579-0DF3C10F2796}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="SSIS_LoadEventSummary"
+  DTS:PackageType="5"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{950AEAB3-F752-4B45-A392-78C76DF69173}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{BB5A90A6-552F-452B-AF8C-53931234482A}"
+      DTS:ObjectName="VSQLSERVER.Maintenance">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=VSQLSERVER;Initial Catalog=Maintenance;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FDDCBA4A-60F5-404B-B1D8-2C3AECDAC2C8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{BB5A90A6-552F-452B-AF8C-53931234482A}"
+          SQLTask:SqlStatementSource="truncate table mnttblExceptionLog_Summary" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task VREPORTSERVER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{63f9eefe-09d1-4ee8-a3fb-d1aede8b538a}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task VREPORTSERVER"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}"
+          SQLTask:SqlStatementSource="truncate table mnttblExceptionLog_Summary" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VREPORTSERVER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{d09ed3bb-8510-4aec-b0ef-f5955e58cac3}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VREPORTSERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\VREPORTSERVER\ExceptionLog_Summary Load"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ExceptionLog_Summary Load"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mnttblExceptionLog_Summary]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 100000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">100000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[SQLServerName]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="SQLServerName"
+                      externalMetadataColumnId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[SQLServerName]"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[ErrorDay]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ErrorDay"
+                      externalMetadataColumnId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDay]"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[ErrorCount]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCount"
+                      externalMetadataColumnId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCount]"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[LogID]"
+                      dataType="i4"
+                      name="LogID" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[SQLServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SQLServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDay]"
+                      dataType="dbDate"
+                      name="ErrorDay" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCount]"
+                      dataType="i4"
+                      name="ErrorCount" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\VREPORTSERVER\Get Event Summary"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get Event Summary"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select @@servername as SQLServerName, cast(convert(varchar(50), ErrorTime, 101) as datetime) As ErrorDay, count(*) As ErrorCount
+from mntblSQLExceptionLog_Detail with (nolock)
+group by cast(convert(varchar(50), ErrorTime, 101) as datetime)
+order by 2</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VREPORTSERVER\Get Event Summary.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[SQLServerName]"
+                      length="128"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]"
+                      name="SQLServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorDay]"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]"
+                      name="ErrorDay"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorCount]"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]"
+                      name="ErrorCount"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[SQLServerName]"
+                      dataType="wstr"
+                      length="128"
+                      name="SQLServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      name="ErrorDay" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorCount]"
+                      dataType="i4"
+                      name="ErrorCount" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[SQLServerName]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[SQLServerName]"
+                      name="SQLServerName" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorDay]"
+                      name="ErrorDay" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCount]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCount]"
+                      name="ErrorCount" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\VREPORTSERVER.Paths[OLE DB Source Output]"
+              endId="Package\VREPORTSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\VREPORTSERVER\Get Event Summary.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VSQLSERVER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{BFC109FA-994D-482F-AD6A-6B9730089F26}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VSQLSERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\VSQLSERVER\ExceptionLog_Summary Load"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="ExceptionLog_Summary Load"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mnttblExceptionLog_Summary]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 100000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">100000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  connectionManagerRefId="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[SQLServerName]"
+                      cachedDataType="wstr"
+                      cachedLength="128"
+                      cachedName="SQLServerName"
+                      externalMetadataColumnId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[SQLServerName]"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[ErrorDay]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ErrorDay"
+                      externalMetadataColumnId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDay]"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].Columns[ErrorCount]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCount"
+                      externalMetadataColumnId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCount]"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[LogID]"
+                      dataType="i4"
+                      name="LogID" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[SQLServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SQLServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorDay]"
+                      dataType="dbDate"
+                      name="ErrorDay" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input].ExternalColumns[ErrorCount]"
+                      dataType="i4"
+                      name="ErrorCount" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER\ExceptionLog_Summary Load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\VSQLSERVER\Get Event Summary"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get Event Summary"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select @@servername as SQLServerName, cast(convert(varchar(50), ErrorTime, 101) as datetime) As ErrorDay, count(*) As ErrorCount
+from mntblSQLExceptionLog_Detail with (nolock)
+group by cast(convert(varchar(50), ErrorTime, 101) as datetime)
+order by 2</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VSQLSERVER\Get Event Summary.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  connectionManagerRefId="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[SQLServerName]"
+                      length="128"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[SQLServerName]"
+                      name="SQLServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorDay]"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorDay]"
+                      name="ErrorDay"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorCount]"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].Columns[ErrorCount]"
+                      name="ErrorCount"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[SQLServerName]"
+                      dataType="wstr"
+                      length="128"
+                      name="SQLServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      name="ErrorDay" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output].ExternalColumns[ErrorCount]"
+                      dataType="i4"
+                      name="ErrorCount" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[SQLServerName]"
+                      dataType="wstr"
+                      length="128"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[SQLServerName]"
+                      name="SQLServerName" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorDay]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorDay]"
+                      name="ErrorDay" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCount]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCount]"
+                      name="ErrorCount" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\VSQLSERVER.Paths[OLE DB Source Output]"
+              endId="Package\VSQLSERVER\ExceptionLog_Summary Load.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\VSQLSERVER\Get Event Summary.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A8D8FDC9-F96D-4A8C-BF6F-69770445162C}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\VSQLSERVER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{66534A79-177C-43BD-9877-F5EB68D28CAD}"
+      DTS:From="Package\Execute SQL Task VREPORTSERVER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\VREPORTSERVER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8EDFC2F1-167D-401D-AC40-5D8227C33780}"
+      DTS:From="Package\VSQLSERVER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Execute SQL Task VREPORTSERVER" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163.2,41.6"
+          Id="Package\Execute SQL Task"
+          TopLeft="39.2857129622479,59.9882351396818" />
+        <NodeLayout
+          Size="248.8,41.6"
+          Id="Package\Execute SQL Task VREPORTSERVER"
+          TopLeft="247.285716504466,31.6470543363102" />
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\VREPORTSERVER"
+          TopLeft="338.142860908897,182.141174093992" />
+        <NodeLayout
+          Size="140.8,41.6"
+          Id="Package\VSQLSERVER"
+          TopLeft="45.2857129622477,210.847058274425" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="120.885712962248,101.588235139682">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-27.3333333333335,109.258823134743"
+              Start="0,0"
+              End="-27.3333333333335,101.758823134743">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.8187175451059" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,60.8187175451059"
+                    Point2="0,64.8187175451059"
+                    Point3="-4,64.8187175451059" />
+                  <mssgle:LineSegment
+                    End="-23.3333333333335,64.8187175451059" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-23.3333333333335,64.8187175451059"
+                    Point2="-27.3333333333335,64.8187175451059"
+                    Point3="-27.3333333333335,68.8187175451059" />
+                  <mssgle:LineSegment
+                    End="-27.3333333333335,101.758823134743" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="415.180955373349,73.2470543363102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,108.894119757682"
+              Start="0,0"
+              End="0,101.394119757682">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,101.394119757682" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="137.819046295581,210.847058274425">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="193.733336875552,-137.600003938114"
+              Start="0,0"
+              End="193.733336875552,-130.100003938114">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-65.2149894258661" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-65.2149894258661"
+                    Point2="0,-69.2149894258661"
+                    Point3="4,-69.2149894258661" />
+                  <mssgle:LineSegment
+                    End="189.733336875552,-69.2149894258661" />
+                  <mssgle:CubicBezierSegment
+                    Point1="189.733336875552,-69.2149894258661"
+                    Point2="193.733336875552,-69.2149894258661"
+                    Point3="193.733336875552,-73.2149894258661" />
+                  <mssgle:LineSegment
+                    End="193.733336875552,-130.100003938114" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\VREPORTSERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\VREPORTSERVER\Get Event Summary"
+          TopLeft="48.2857128260087,63.4352939975303" />
+        <NodeLayout
+          Size="216.8,41.6"
+          Id="Package\VREPORTSERVER\ExceptionLog_Summary Load"
+          TopLeft="157,246" />
+        <EdgeLayout
+          Id="Package\VREPORTSERVER.Paths[OLE DB Source Output]"
+          TopLeft="134.685712826009,105.03529399753">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="130.714287173991,140.96470600247"
+              Start="0,0"
+              End="130.714287173991,133.46470600247">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.4823530012349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,66.4823530012349"
+                    Point2="0,70.4823530012349"
+                    Point3="4,70.4823530012349" />
+                  <mssgle:LineSegment
+                    End="126.714287173991,70.4823530012349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="126.714287173991,70.4823530012349"
+                    Point2="130.714287173991,70.4823530012349"
+                    Point3="130.714287173991,74.4823530012349" />
+                  <mssgle:LineSegment
+                    End="130.714287173991,133.46470600247" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\VREPORTSERVER\ExceptionLog_Summary Load">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\VREPORTSERVER\Get Event Summary">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\VSQLSERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="172.8,41.6"
+          Id="Package\VSQLSERVER\Get Event Summary"
+          TopLeft="48.2857128260087,63.4352939975303" />
+        <NodeLayout
+          Size="216.8,41.6"
+          Id="Package\VSQLSERVER\ExceptionLog_Summary Load"
+          TopLeft="157,246" />
+        <EdgeLayout
+          Id="Package\VSQLSERVER.Paths[OLE DB Source Output]"
+          TopLeft="134.685712826009,105.03529399753">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="130.714287173991,140.96470600247"
+              Start="0,0"
+              End="130.714287173991,133.46470600247">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.4823530012349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,66.4823530012349"
+                    Point2="0,70.4823530012349"
+                    Point3="4,70.4823530012349" />
+                  <mssgle:LineSegment
+                    End="126.714287173991,70.4823530012349" />
+                  <mssgle:CubicBezierSegment
+                    Point1="126.714287173991,70.4823530012349"
+                    Point2="130.714287173991,70.4823530012349"
+                    Point3="130.714287173991,74.4823530012349" />
+                  <mssgle:LineSegment
+                    End="130.714287173991,133.46470600247" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\VSQLSERVER\ExceptionLog_Summary Load">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\VSQLSERVER\Get Event Summary">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

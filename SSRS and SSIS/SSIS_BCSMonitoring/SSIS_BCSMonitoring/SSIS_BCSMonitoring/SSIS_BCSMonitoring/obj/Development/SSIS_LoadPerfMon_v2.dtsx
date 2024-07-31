@@ -1,0 +1,1183 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/30/2016 5:59:43 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ATLAS"
+  DTS:CreatorName="ACA\cbecker"
+  DTS:DTSID="{299413D7-85E1-4BD3-B3BC-41E7E3F1893F}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5467.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="SSIS_LoadPerfMon_v2"
+  DTS:PackageType="5"
+  DTS:VersionBuild="60"
+  DTS:VersionGUID="{69F67690-5C8C-4311-987B-3E07E932475C}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{F5917B4A-539B-444C-BB19-1BBE910D2487}"
+      DTS:ObjectName="VSQLSERVER.Maintenance">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=AWS-SQL04.ADA-CS.COM;Initial Catalog=SQLMon;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-SSIS_LoadPerfMon_v2-{F5917B4A-539B-444C-BB19-1BBE910D2487}VSQLSERVER.Maintenance;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Load VREPORTSERVER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{48aecce9-57b3-4a86-876d-4fa38a2982ca}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load VREPORTSERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load VREPORTSERVER\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mnttblCounterDetails_All]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">1000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load VREPORTSERVER\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ServerName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="ServerName"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ServerName]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[ServerName]" />
+                    <inputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2049"
+                      cachedName="CounterName"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterName]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterName]" />
+                    <inputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterDateTime]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="24"
+                      cachedName="CounterDateTime"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterDateTime]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]" />
+                    <inputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterValue]"
+                      cachedDataType="r8"
+                      cachedName="CounterValue"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterValue]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]" />
+                    <inputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterID]"
+                      cachedDataType="i4"
+                      cachedName="CounterID"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterID]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="ServerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1024"
+                      name="CounterName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterDateTime]"
+                      dataType="dbTimeStamp"
+                      name="CounterDateTime" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterValue]"
+                      dataType="r8"
+                      name="CounterValue" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterID]"
+                      dataType="i4"
+                      name="CounterID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load VREPORTSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load VREPORTSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load VREPORTSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load VREPORTSERVER\VREPORTSERVER"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="VREPORTSERVER"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Declare @LastCollDateTime datetime
+	, @ServerName varchar(100) = @@servername
+	
+--Select @LastCollDateTime = 'Aug 26 2016  4:00PM'
+--Select @LastCollDateTime = '2016-08-26 16:00:54.950'
+
+Select @LastCollDateTime = SSISParamValue
+From SSISConfigParams with (nolock)
+Where SSISParamName = 'PerfMonLastDate'
+  And ServerName = @ServerName
+
+--select @LastCollDateTime
+--print @LastCollDateTime
+
+Select Cast(rtrim(@@servername) as varchar(128)) as ServerName, d.CounterID
+	, ISNULL(dtl.CounterName, '') + ' ' + ISNULL(InstanceName, '') As CounterName
+	, d.CounterDateTime, d.CounterValue
+From counterdetails dtl with (nolock)
+  join counterdata d with (nolock) on dtl.CounterID = d.CounterID
+--Where d.CounterDAteTime &gt;= @LastCollDateTime 
+Where CONVERT(DATETIME, CONVERT(VARCHAR(16), CounterDateTime))  &gt; @LastCollDateTime 
+Order by 4 desc
+
+--Select @@ServerName As ServerName, CounterName, CapturedDateTime As CounterDateTime, CounterValue
+--From Maintenance.dbo.montblPerfCounterData with (nolock)
+--Where CapturedDateTime &gt; @LastCollDateTime 
+--Order by CapturedDateTime desc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load VREPORTSERVER\VREPORTSERVER.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[ServerName]"
+                      length="128"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[ServerName]"
+                      name="ServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterID]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterID]"
+                      name="CounterID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterName]"
+                      length="2049"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterName]"
+                      name="CounterName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterDateTime]"
+                      length="24"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]"
+                      name="CounterDateTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterValue]"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]"
+                      name="CounterValue"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="ServerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterID]"
+                      dataType="i4"
+                      name="CounterID" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2049"
+                      name="CounterName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      name="CounterDateTime" />
+                    <externalMetadataColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterValue]"
+                      dataType="r8"
+                      name="CounterValue" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ServerName]"
+                      name="ServerName" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterID]"
+                      dataType="i4"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterID]"
+                      name="CounterID" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2049"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterName]"
+                      name="CounterName" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterDateTime]"
+                      name="CounterDateTime" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterValue]"
+                      dataType="r8"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[CounterValue]"
+                      name="CounterValue" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load VREPORTSERVER.Paths[OLE DB Source Output]"
+              endId="Package\Load VREPORTSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load VREPORTSERVER\VREPORTSERVER.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Load VSQLSERVER"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B0032384-BA9B-48B3-A317-3892FF26F2DD}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Load VSQLSERVER"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server v10; (C) 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          BLOBTempStoragePath=""
+          bufferTempStoragePath=""
+          version="1">
+          <components>
+            <component
+              refId="Package\Load VSQLSERVER\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mnttblCounterDetails_All]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 1000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">1000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load VSQLSERVER\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ServerName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="128"
+                      cachedName="ServerName"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ServerName]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[ServerName]" />
+                    <inputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterName]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="2049"
+                      cachedName="CounterName"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterName]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterName]" />
+                    <inputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterDateTime]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="24"
+                      cachedName="CounterDateTime"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterDateTime]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]" />
+                    <inputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterValue]"
+                      cachedDataType="r8"
+                      cachedName="CounterValue"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterValue]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]" />
+                    <inputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CounterID]"
+                      cachedDataType="i4"
+                      cachedName="CounterID"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterID]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="ServerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="1024"
+                      name="CounterName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterDateTime]"
+                      dataType="dbTimeStamp"
+                      name="CounterDateTime" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterValue]"
+                      dataType="r8"
+                      name="CounterValue" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CounterID]"
+                      dataType="i4"
+                      name="CounterID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Load VSQLSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load VSQLSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load VSQLSERVER\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Load VSQLSERVER\VSQLSERVER"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="VSQLSERVER"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">Declare @LastCollDateTime datetime
+	, @ServerName varchar(100) = @@servername
+	
+--Select @LastCollDateTime = 'Aug 26 2016  4:00PM'
+--Select @LastCollDateTime = '2016-08-26 16:00:54.950'
+
+Select @LastCollDateTime = SSISParamValue
+From SSISConfigParams with (nolock)
+Where SSISParamName = 'PerfMonLastDate'
+  And ServerName = @ServerName
+
+--select @LastCollDateTime
+--print @LastCollDateTime
+
+Select Cast(rtrim(@@servername) as varchar(128)) as ServerName, d.CounterID
+	, ISNULL(dtl.CounterName, '') + ' ' + ISNULL(InstanceName, '') As CounterName
+	, d.CounterDateTime, d.CounterValue
+From counterdetails dtl with (nolock)
+  join counterdata d with (nolock) on dtl.CounterID = d.CounterID
+--Where d.CounterDAteTime &gt;= @LastCollDateTime 
+Where CONVERT(DATETIME, CONVERT(VARCHAR(16), CounterDateTime))  &gt; @LastCollDateTime 
+Order by 4 desc
+
+--Select @@ServerName As ServerName, CounterName, CapturedDateTime As CounterDateTime, CounterValue
+--From Maintenance.dbo.montblPerfCounterData with (nolock)
+--Where CapturedDateTime &gt; @LastCollDateTime 
+--Order by CapturedDateTime desc</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Load VSQLSERVER\VSQLSERVER.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  connectionManagerRefId="Package.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[ServerName]"
+                      length="128"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[ServerName]"
+                      name="ServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterName]"
+                      length="2049"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterName]"
+                      name="CounterName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterDateTime]"
+                      length="24"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterDateTime]"
+                      name="CounterDateTime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterValue]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterValue]"
+                      name="CounterValue"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterID]"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].Columns[CounterID]"
+                      name="CounterID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      name="ServerName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2049"
+                      name="CounterName" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      name="CounterDateTime" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterValue]"
+                      dataType="r8"
+                      name="CounterValue" />
+                    <externalMetadataColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output].ExternalColumns[CounterID]"
+                      dataType="i4"
+                      name="CounterID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ServerName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="128"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ServerName]"
+                      name="ServerName" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterID]"
+                      dataType="i4"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterID]"
+                      name="CounterID" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterName]"
+                      codePage="1252"
+                      dataType="str"
+                      length="2049"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterName]"
+                      name="CounterName" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterDateTime]"
+                      codePage="1252"
+                      dataType="str"
+                      length="24"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterDateTime]"
+                      name="CounterDateTime" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterValue]"
+                      dataType="r8"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[CounterValue]"
+                      name="CounterValue" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Load VSQLSERVER.Paths[OLE DB Source Output]"
+              endId="Package\Load VSQLSERVER\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Load VSQLSERVER\VSQLSERVER.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update VREPORTSERVER Control Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{99584d30-9e8b-46e8-84e6-d8fa2532ce2a}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update VREPORTSERVER Control Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}"
+          SQLTask:SqlStatementSource="Declare @ServerName varchar(100) = @@servername&#xA;&#xA;UPDATE SSISConfigParams SET SSISParamValue = GETDATE()&#xA;WHERE SSISParamName = 'PerfMonLastDate'&#xA;  And ServerName = @ServerName" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update VSQLSERVER Control Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{6CECBF59-FB5A-4F37-A910-5707EC88FB22}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update VSQLSERVER Control Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; Microsoft SQL Server 2008 R2; © 2007 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{F5917B4A-539B-444C-BB19-1BBE910D2487}"
+          SQLTask:SqlStatementSource="Declare @ServerName varchar(100) = @@servername&#xA;&#xA;UPDATE SSISConfigParams SET SSISParamValue = GETDATE()&#xA;WHERE SSISParamName = 'PerfMonLastDate'&#xA;  And ServerName = @ServerName" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{18D6C417-2B41-44F3-A59B-34EC57610F34}"
+      DTS:From="Package\Load VSQLSERVER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update VSQLSERVER Control Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E9DAA147-0853-41F5-A941-96E341256010}"
+      DTS:From="Package\Update VSQLSERVER Control Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Load VREPORTSERVER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{A2C39153-CF30-4F9E-A949-A0F5050FEF68}"
+      DTS:From="Package\Load VREPORTSERVER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Update VREPORTSERVER Control Table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="187.2,41.6"
+          Id="Package\Load VREPORTSERVER"
+          TopLeft="325.80612790376,28.3335444055662" />
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Load VSQLSERVER"
+          TopLeft="5.5,5.5" />
+        <NodeLayout
+          Size="264,41.6"
+          Id="Package\Update VREPORTSERVER Control Table"
+          TopLeft="316.112250187655,157.56884033569" />
+        <NodeLayout
+          Size="244.8,41.6"
+          Id="Package\Update VSQLSERVER Control Table"
+          TopLeft="24.4811320754717,116.330188679245" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="89.1,47.1">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="18.314465408805,69.230188679245"
+              Start="0,0"
+              End="18.314465408805,61.730188679245">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.2683851997058" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,37.2683851997058"
+                    Point2="0,41.2683851997058"
+                    Point3="4,41.2683851997058" />
+                  <mssgle:LineSegment
+                    End="14.314465408805,41.2683851997058" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.314465408805,41.2683851997058"
+                    Point2="18.314465408805,41.2683851997058"
+                    Point3="18.314465408805,45.2683851997058" />
+                  <mssgle:LineSegment
+                    End="18.314465408805,61.730188679245" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="186.347798742138,116.330188679245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="203.191662494955,-46.3966442736788"
+              Start="0,0"
+              End="203.191662494955,-38.8966442736788">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-19.1410847271754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-19.1410847271754"
+                    Point2="0,-23.1410847271754"
+                    Point3="4,-23.1410847271754" />
+                  <mssgle:LineSegment
+                    End="199.191662494955,-23.1410847271754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="199.191662494955,-23.1410847271754"
+                    Point2="203.191662494955,-23.1410847271754"
+                    Point3="203.191662494955,-27.1410847271754" />
+                  <mssgle:LineSegment
+                    End="203.191662494955,-38.8966442736788" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="448.692522379041,69.9335444055662">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="0,87.6352959301235"
+              Start="0,0"
+              End="0,80.1352959301235">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,80.1352959301235" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Load VREPORTSERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="160.8,41.6"
+          Id="Package\Load VREPORTSERVER\VREPORTSERVER"
+          TopLeft="262,92" />
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Load VREPORTSERVER\OLE DB Destination"
+          TopLeft="302,238" />
+        <EdgeLayout
+          Id="Package\Load VREPORTSERVER.Paths[OLE DB Source Output]"
+          TopLeft="342.4,133.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.8,104.4"
+              Start="0,0"
+              End="44.8,96.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,48.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,48.2"
+                    Point2="0,52.2"
+                    Point3="4,52.2" />
+                  <mssgle:LineSegment
+                    End="40.8,52.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="40.8,52.2"
+                    Point2="44.8,52.2"
+                    Point3="44.8,56.2" />
+                  <mssgle:LineSegment
+                    End="44.8,96.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load VREPORTSERVER\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load VREPORTSERVER\VREPORTSERVER">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load VSQLSERVER">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="170.4,41.6"
+          Id="Package\Load VSQLSERVER\OLE DB Destination"
+          TopLeft="135.000002299036,166.705884690928" />
+        <NodeLayout
+          Size="140.8,41.6"
+          Id="Package\Load VSQLSERVER\VSQLSERVER"
+          TopLeft="72.0000012261527,28.7529415797197" />
+        <EdgeLayout
+          Id="Package\Load VSQLSERVER.Paths[OLE DB Source Output]"
+          TopLeft="142.400001226153,70.3529415797197">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="77.8000010728837,96.3529431112085"
+              Start="0,0"
+              End="77.8000010728837,88.8529431112085">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.1764715556043" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,44.1764715556043"
+                    Point2="0,48.1764715556043"
+                    Point3="4,48.1764715556043" />
+                  <mssgle:LineSegment
+                    End="73.8000010728837,48.1764715556043" />
+                  <mssgle:CubicBezierSegment
+                    Point1="73.8000010728837,48.1764715556043"
+                    Point2="77.8000010728837,48.1764715556043"
+                    Point3="77.8000010728837,52.1764715556043" />
+                  <mssgle:LineSegment
+                    End="77.8000010728837,88.8529431112085" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load VSQLSERVER\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load VSQLSERVER\VSQLSERVER">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

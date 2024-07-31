@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:DelayValidation="True"
+  DTS:ObjectName="VREPORTSERVER.Maintenance"
+  DTS:DTSID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=VREPORTSERVER;Initial Catalog=Maintenance;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Application Name=SSIS-{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}VREPORTSERVER.Maintenance;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="AWS-SQL04.ADA-CS.COM.SQLMon"
+  DTS:DTSID="{F46B2F29-5936-4586-B23B-CC65D24EBC8B}"
+  DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=AWS-SQL04.ADA-CS.COM;Initial Catalog=SQLMon;Integrated Security=True;Application Name=SSIS-SSIS_BCSMonitoring-{F46B2F29-5936-4586-B23B-CC65D24EBC8B}AWS-SQL04.ADA-CS.COM.SQLMon;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

@@ -1,0 +1,2188 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/4/2018 3:17:49 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DNTGWS106"
+  DTS:CreatorName="RIADEV\cbecker"
+  DTS:DTSID="{3D6D0F34-CE49-47CD-957E-3E2000AF8FC8}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5467.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="SSIS_montblXE_CPUReadsFilterTrace_CopyToReports"
+  DTS:PackageType="5"
+  DTS:VersionBuild="38"
+  DTS:VersionGUID="{F469889B-8067-45AC-839E-1D57176F0E02}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Update Groupby_val"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F3967ABE-AB65-4E94-9010-A1A9276CB172}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update Groupby_val"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}"
+          SQLTask:SqlStatementSource="&#xA;update montblXE_CPUReadsFilterTrace_Consol set item_count = 1, is_processed = 1&#xA;&#x9;, groupby_val = Case When [object_name] is null then (case when query_hash = 0 then SUBSTRING([statement],1,50) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;   --when query_hash &lt;&gt; 0 then SUBSTRING([statement],1,50) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;else cast(query_hash as nvarchar(500)) end) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9; else [object_name] &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;end  &#xA;where is_processed is null" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VREPORTSERVER Copy Trace Data to Reports"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{e1985d3b-a298-43d5-96c4-8ba593d4fb3e}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VREPORTSERVER Copy Trace Data to Reports"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Consol Table for Reporting"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[montblXE_CPUReadsFilterTrace_Consol]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 10000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">10000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[pdtlocaltime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="pdtlocaltime"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[pdtlocaltime]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[XEID]"
+                      cachedDataType="i4"
+                      cachedName="XEID"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[XEID]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[SqlServerName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SqlServerName"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[SqlServerName]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[timestamp]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="timestamp"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[timestamp]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[event_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="event_name"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[event_name]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[cpu_time]"
+                      cachedDataType="numeric"
+                      cachedName="cpu_time"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[cpu_time]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[duration]"
+                      cachedDataType="numeric"
+                      cachedName="duration"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[physical_reads]"
+                      cachedDataType="numeric"
+                      cachedName="physical_reads"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[physical_reads]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[logical_reads]"
+                      cachedDataType="numeric"
+                      cachedName="logical_reads"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[logical_reads]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[writes]"
+                      cachedDataType="numeric"
+                      cachedName="writes"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[writes]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[object_name]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="object_name"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[object_name]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[statement]"
+                      cachedDataType="nText"
+                      cachedName="statement"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[statement]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[username]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="username"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[username]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[session_id]"
+                      cachedDataType="i4"
+                      cachedName="session_id"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[session_id]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[query_hash]"
+                      cachedDataType="numeric"
+                      cachedName="query_hash"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[query_hash]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[nt_username]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="nt_username"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[nt_username]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[database_name]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="database_name"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_name]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[database_id]"
+                      cachedDataType="i4"
+                      cachedName="database_id"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_id]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[client_hostname]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="client_hostname"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[client_hostname]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]" />
+                    <inputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[ItemCount]"
+                      cachedDataType="i4"
+                      cachedName="ItemCount"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[ConsolId]"
+                      dataType="i8"
+                      name="ConsolId" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[XEID]"
+                      dataType="i4"
+                      name="XEID" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SqlServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[timestamp]"
+                      dataType="dbTimeStamp"
+                      name="timestamp" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      name="pdtlocaltime" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[groupby_val]"
+                      dataType="wstr"
+                      length="500"
+                      name="groupby_val" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      dataType="i4"
+                      name="item_count" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="event_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[cpu_time]"
+                      dataType="numeric"
+                      name="cpu_time"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      dataType="numeric"
+                      name="duration"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[physical_reads]"
+                      dataType="numeric"
+                      name="physical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[logical_reads]"
+                      dataType="numeric"
+                      name="logical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[writes]"
+                      dataType="numeric"
+                      name="writes"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[object_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="object_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[statement]"
+                      dataType="nText"
+                      name="statement" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[username]"
+                      dataType="wstr"
+                      length="200"
+                      name="username" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[session_id]"
+                      dataType="i4"
+                      name="session_id" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[query_hash]"
+                      dataType="numeric"
+                      name="query_hash"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[nt_username]"
+                      dataType="wstr"
+                      length="200"
+                      name="nt_username" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="database_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_id]"
+                      dataType="i4"
+                      name="database_id" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[client_hostname]"
+                      dataType="wstr"
+                      length="200"
+                      name="client_hostname" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[sql_text]"
+                      dataType="nText"
+                      name="sql_text" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[is_processed]"
+                      dataType="bool"
+                      name="is_processed" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get montblXE_CPUReadsFilterTrace"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select 1 As ItemCount
+	--, Case When [object_name] is null then (case when query_hash = 0 then SUBSTRING([statement],1,50) else cast(query_hash as nvarchar(500)) end) else [object_name] end As GroupByVal
+	, DATEADD(mi, DATEDIFF(mi, GETUTCDATE(), GETDATE()), [timestamp]) AS pdtlocaltime
+	, XEID
+	, SqlServerName
+	, [timestamp]
+	, event_name
+	, cpu_time
+	, duration
+	, physical_reads
+	, logical_reads
+	, writes
+	, [object_name]
+	, [statement]
+	, username
+	, session_id
+	, query_hash
+	, nt_username
+	, database_name
+	, database_id
+	, client_hostname
+	, sql_text
+from montblXE_CPUReadsFilterTrace with (Nolock)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[ItemCount]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]"
+                      name="ItemCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[pdtlocaltime]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]"
+                      name="pdtlocaltime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[XEID]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]"
+                      name="XEID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[SqlServerName]"
+                      length="100"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]"
+                      name="SqlServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[timestamp]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]"
+                      name="timestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[event_name]"
+                      length="200"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]"
+                      name="event_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[cpu_time]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]"
+                      name="cpu_time"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]"
+                      name="duration"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[physical_reads]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]"
+                      name="physical_reads"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[logical_reads]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]"
+                      name="logical_reads"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[writes]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]"
+                      name="writes"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[object_name]"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]"
+                      name="object_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[statement]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]"
+                      name="statement"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[username]"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]"
+                      name="username"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[session_id]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]"
+                      name="session_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[query_hash]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]"
+                      name="query_hash"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[nt_username]"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]"
+                      name="nt_username"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_name]"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]"
+                      name="database_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_id]"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]"
+                      name="database_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[client_hostname]"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]"
+                      name="client_hostname"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[ItemCount]"
+                      dataType="i4"
+                      name="ItemCount" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      name="pdtlocaltime" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[XEID]"
+                      dataType="i4"
+                      name="XEID" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SqlServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[timestamp]"
+                      dataType="dbTimeStamp"
+                      name="timestamp" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="event_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[cpu_time]"
+                      dataType="numeric"
+                      name="cpu_time"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      dataType="numeric"
+                      name="duration"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[physical_reads]"
+                      dataType="numeric"
+                      name="physical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[logical_reads]"
+                      dataType="numeric"
+                      name="logical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[writes]"
+                      dataType="numeric"
+                      name="writes"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[object_name]"
+                      dataType="wstr"
+                      length="500"
+                      name="object_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[statement]"
+                      dataType="nText"
+                      name="statement" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[username]"
+                      dataType="wstr"
+                      length="500"
+                      name="username" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[session_id]"
+                      dataType="i4"
+                      name="session_id" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[query_hash]"
+                      dataType="numeric"
+                      name="query_hash"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[nt_username]"
+                      dataType="wstr"
+                      length="500"
+                      name="nt_username" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_name]"
+                      dataType="wstr"
+                      length="500"
+                      name="database_name" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_id]"
+                      dataType="i4"
+                      name="database_id" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[client_hostname]"
+                      dataType="wstr"
+                      length="500"
+                      name="client_hostname" />
+                    <externalMetadataColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[sql_text]"
+                      dataType="nText"
+                      name="sql_text" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ItemCount]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ItemCount]"
+                      name="ItemCount" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[pdtlocaltime]"
+                      name="pdtlocaltime" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[XEID]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[XEID]"
+                      name="XEID" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[SqlServerName]"
+                      name="SqlServerName" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[timestamp]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[timestamp]"
+                      name="timestamp" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[event_name]"
+                      name="event_name" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[cpu_time]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[cpu_time]"
+                      name="cpu_time"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      name="duration"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[physical_reads]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[physical_reads]"
+                      name="physical_reads"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[logical_reads]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[logical_reads]"
+                      name="logical_reads"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[writes]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[writes]"
+                      name="writes"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[object_name]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[object_name]"
+                      name="object_name" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[statement]"
+                      dataType="nText"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[statement]"
+                      name="statement" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[username]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[username]"
+                      name="username" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[session_id]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[session_id]"
+                      name="session_id" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[query_hash]"
+                      dataType="numeric"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[query_hash]"
+                      name="query_hash"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[nt_username]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[nt_username]"
+                      name="nt_username" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_name]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_name]"
+                      name="database_name" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_id]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_id]"
+                      name="database_id" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[client_hostname]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[client_hostname]"
+                      name="client_hostname" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\VREPORTSERVER Copy Trace Data to Reports.Paths[OLE DB Source Output]"
+              endId="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VREPORTSERVER Truncate Table after offload 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{896c22b6-b711-45e6-9f1f-6bdd3f6f3307}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VREPORTSERVER Truncate Table after offload 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}"
+          SQLTask:SqlStatementSource="truncate table montblXE_CPUReadsFilterTrace" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VSQLSERVER Copy Trace Data to Reports"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{9D23345B-5857-4CDA-95DC-6BECD1B7BFBA}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VSQLSERVER Copy Trace Data to Reports"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Consol Table for Reporting"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[montblXE_CPUReadsFilterTrace_Consol]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">ROWS_PER_BATCH = 10000</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">10000</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Connections[OleDbConnection]"
+                  connectionManagerID="{716F93B4-3CCF-4998-8CF6-47FE7D9E3EEA}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VREPORTSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[pdtlocaltime]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="pdtlocaltime"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[pdtlocaltime]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[XEID]"
+                      cachedDataType="i4"
+                      cachedName="XEID"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[XEID]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[SqlServerName]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="SqlServerName"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[SqlServerName]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[timestamp]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="timestamp"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[timestamp]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[event_name]"
+                      cachedDataType="wstr"
+                      cachedLength="200"
+                      cachedName="event_name"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[event_name]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[cpu_time]"
+                      cachedDataType="numeric"
+                      cachedName="cpu_time"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[cpu_time]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[duration]"
+                      cachedDataType="numeric"
+                      cachedName="duration"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[physical_reads]"
+                      cachedDataType="numeric"
+                      cachedName="physical_reads"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[physical_reads]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[logical_reads]"
+                      cachedDataType="numeric"
+                      cachedName="logical_reads"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[logical_reads]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[writes]"
+                      cachedDataType="numeric"
+                      cachedName="writes"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[writes]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[object_name]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="object_name"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[object_name]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[statement]"
+                      cachedDataType="nText"
+                      cachedName="statement"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[statement]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[username]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="username"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[username]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[session_id]"
+                      cachedDataType="i4"
+                      cachedName="session_id"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[session_id]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[query_hash]"
+                      cachedDataType="numeric"
+                      cachedName="query_hash"
+                      cachedPrecision="20"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[query_hash]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[nt_username]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="nt_username"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[nt_username]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[database_name]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="database_name"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_name]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[database_id]"
+                      cachedDataType="i4"
+                      cachedName="database_id"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_id]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[client_hostname]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="client_hostname"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[client_hostname]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]" />
+                    <inputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].Columns[ItemCount]"
+                      cachedDataType="i4"
+                      cachedName="ItemCount"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[ConsolId]"
+                      dataType="i8"
+                      name="ConsolId" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[XEID]"
+                      dataType="i4"
+                      name="XEID" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SqlServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[timestamp]"
+                      dataType="dbTimeStamp"
+                      name="timestamp" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      name="pdtlocaltime" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[groupby_val]"
+                      dataType="wstr"
+                      length="500"
+                      name="groupby_val" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[item_count]"
+                      dataType="i4"
+                      name="item_count" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="event_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[cpu_time]"
+                      dataType="numeric"
+                      name="cpu_time"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[duration]"
+                      dataType="numeric"
+                      name="duration"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[physical_reads]"
+                      dataType="numeric"
+                      name="physical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[logical_reads]"
+                      dataType="numeric"
+                      name="logical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[writes]"
+                      dataType="numeric"
+                      name="writes"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[object_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="object_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[statement]"
+                      dataType="nText"
+                      name="statement" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[username]"
+                      dataType="wstr"
+                      length="200"
+                      name="username" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[session_id]"
+                      dataType="i4"
+                      name="session_id" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[query_hash]"
+                      dataType="numeric"
+                      name="query_hash"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[nt_username]"
+                      dataType="wstr"
+                      length="200"
+                      name="nt_username" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="database_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[database_id]"
+                      dataType="i4"
+                      name="database_id" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[client_hostname]"
+                      dataType="wstr"
+                      length="200"
+                      name="client_hostname" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[sql_text]"
+                      dataType="nText"
+                      name="sql_text" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input].ExternalColumns[is_processed]"
+                      dataType="bool"
+                      name="is_processed" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Get montblXE_CPUReadsFilterTrace"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select 1 As ItemCount
+	--, Case When [object_name] is null then (case when query_hash = 0 then SUBSTRING([statement],1,50) else cast(query_hash as nvarchar(500)) end) else [object_name] end As GroupByVal
+	, DATEADD(mi, DATEDIFF(mi, GETUTCDATE(), GETDATE()), [timestamp]) AS pdtlocaltime
+	, XEID
+	, SqlServerName
+	, [timestamp]
+	, event_name
+	, cpu_time
+	, duration
+	, physical_reads
+	, logical_reads
+	, writes
+	, [object_name]
+	, [statement]
+	, username
+	, session_id
+	, query_hash
+	, nt_username
+	, database_name
+	, database_id
+	, client_hostname
+	, sql_text
+from montblXE_CPUReadsFilterTrace with (Nolock)</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Connections[OleDbConnection]"
+                  connectionManagerID="{63655E3F-C28A-4B39-B04E-8246252CA18F}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[VSQLSERVER.Maintenance]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[ItemCount]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[ItemCount]"
+                      name="ItemCount"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[pdtlocaltime]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[pdtlocaltime]"
+                      name="pdtlocaltime"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[XEID]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[XEID]"
+                      name="XEID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[SqlServerName]"
+                      length="100"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[SqlServerName]"
+                      name="SqlServerName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[timestamp]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[timestamp]"
+                      name="timestamp"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[event_name]"
+                      length="200"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[event_name]"
+                      name="event_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[cpu_time]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[cpu_time]"
+                      name="cpu_time"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[duration]"
+                      name="duration"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[physical_reads]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[physical_reads]"
+                      name="physical_reads"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[logical_reads]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[logical_reads]"
+                      name="logical_reads"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[writes]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[writes]"
+                      name="writes"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[object_name]"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[object_name]"
+                      name="object_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[statement]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[statement]"
+                      name="statement"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[username]"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[username]"
+                      name="username"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[session_id]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[session_id]"
+                      name="session_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[query_hash]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[query_hash]"
+                      name="query_hash"
+                      precision="20"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[nt_username]"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[nt_username]"
+                      name="nt_username"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_name]"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_name]"
+                      name="database_name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_id]"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[database_id]"
+                      name="database_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[client_hostname]"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].Columns[client_hostname]"
+                      name="client_hostname"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[ItemCount]"
+                      dataType="i4"
+                      name="ItemCount" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      name="pdtlocaltime" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[XEID]"
+                      dataType="i4"
+                      name="XEID" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      name="SqlServerName" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[timestamp]"
+                      dataType="dbTimeStamp"
+                      name="timestamp" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      name="event_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[cpu_time]"
+                      dataType="numeric"
+                      name="cpu_time"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[duration]"
+                      dataType="numeric"
+                      name="duration"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[physical_reads]"
+                      dataType="numeric"
+                      name="physical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[logical_reads]"
+                      dataType="numeric"
+                      name="logical_reads"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[writes]"
+                      dataType="numeric"
+                      name="writes"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[object_name]"
+                      dataType="wstr"
+                      length="500"
+                      name="object_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[statement]"
+                      dataType="nText"
+                      name="statement" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[username]"
+                      dataType="wstr"
+                      length="500"
+                      name="username" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[session_id]"
+                      dataType="i4"
+                      name="session_id" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[query_hash]"
+                      dataType="numeric"
+                      name="query_hash"
+                      precision="20" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[nt_username]"
+                      dataType="wstr"
+                      length="500"
+                      name="nt_username" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_name]"
+                      dataType="wstr"
+                      length="500"
+                      name="database_name" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[database_id]"
+                      dataType="i4"
+                      name="database_id" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[client_hostname]"
+                      dataType="wstr"
+                      length="500"
+                      name="client_hostname" />
+                    <externalMetadataColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output].ExternalColumns[sql_text]"
+                      dataType="nText"
+                      name="sql_text" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ItemCount]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ItemCount]"
+                      name="ItemCount" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[pdtlocaltime]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[pdtlocaltime]"
+                      name="pdtlocaltime" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[XEID]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[XEID]"
+                      name="XEID" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[SqlServerName]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[SqlServerName]"
+                      name="SqlServerName" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[timestamp]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[timestamp]"
+                      name="timestamp" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[event_name]"
+                      dataType="wstr"
+                      length="200"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[event_name]"
+                      name="event_name" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[cpu_time]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[cpu_time]"
+                      name="cpu_time"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[duration]"
+                      name="duration"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[physical_reads]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[physical_reads]"
+                      name="physical_reads"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[logical_reads]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[logical_reads]"
+                      name="logical_reads"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[writes]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[writes]"
+                      name="writes"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[object_name]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[object_name]"
+                      name="object_name" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[statement]"
+                      dataType="nText"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[statement]"
+                      name="statement" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[username]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[username]"
+                      name="username" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[session_id]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[session_id]"
+                      name="session_id" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[query_hash]"
+                      dataType="numeric"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[query_hash]"
+                      name="query_hash"
+                      precision="20" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[nt_username]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[nt_username]"
+                      name="nt_username" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_name]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_name]"
+                      name="database_name" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_id]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[database_id]"
+                      name="database_id" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[client_hostname]"
+                      dataType="wstr"
+                      length="500"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[client_hostname]"
+                      name="client_hostname" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\VSQLSERVER Copy Trace Data to Reports.Paths[OLE DB Source Output]"
+              endId="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\VSQLSERVER Truncate Table after offload"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FAAA2E2A-7962-4BF2-9C6F-CD5143F93F12}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="VSQLSERVER Truncate Table after offload"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{63655E3F-C28A-4B39-B04E-8246252CA18F}"
+          SQLTask:SqlStatementSource="truncate table montblXE_CPUReadsFilterTrace" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{FDEE969B-F14C-4CCD-A55F-26FC776EFDA9}"
+      DTS:From="Package\VSQLSERVER Copy Trace Data to Reports"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\VSQLSERVER Truncate Table after offload" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{20DE7E66-2739-4263-B4AC-5C28D95932A6}"
+      DTS:From="Package\VREPORTSERVER Copy Trace Data to Reports"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\VREPORTSERVER Truncate Table after offload 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB26DE5A-2695-4B2C-A15F-213237C8044B}"
+      DTS:From="Package\VREPORTSERVER Truncate Table after offload 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Update Groupby_val" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{35E7E9BD-8A5E-48FA-89AB-C9C6272EED0C}"
+      DTS:From="Package\VSQLSERVER Truncate Table after offload"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\VREPORTSERVER Copy Trace Data to Reports" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="174.4,41.6"
+          Id="Package\Update Groupby_val"
+          TopLeft="301.857143161248,383.117648238542" />
+        <NodeLayout
+          Size="275.2,41.6"
+          Id="Package\VSQLSERVER Copy Trace Data to Reports"
+          TopLeft="26.9999999148505,46.705882320767" />
+        <NodeLayout
+          Size="276.8,41.6"
+          Id="Package\VSQLSERVER Truncate Table after offload"
+          TopLeft="35.1428572644993,172.764706257718" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="164.59999991485,88.305882320767">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="8.94285734964882,84.4588239369508"
+              Start="0,0"
+              End="8.94285734964882,76.9588239369508">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.2294119684754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,38.2294119684754"
+                    Point2="0,42.2294119684754"
+                    Point3="4,42.2294119684754" />
+                  <mssgle:LineSegment
+                    End="4.94285734964882,42.2294119684754" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4.94285734964882,42.2294119684754"
+                    Point2="8.94285734964882,42.2294119684754"
+                    Point3="8.94285734964882,46.2294119684754" />
+                  <mssgle:LineSegment
+                    End="8.94285734964882,76.9588239369508" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="295.2,41.6"
+          Id="Package\VREPORTSERVER Copy Trace Data to Reports"
+          TopLeft="376.285720148865,104.658819378948" />
+        <NodeLayout
+          Size="305.6,41.6"
+          Id="Package\VREPORTSERVER Truncate Table after offload 1"
+          TopLeft="399.857149121713,221.658821019829" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="523.885720148865,146.258819378948">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="28.7714289728476,75.4000016408808"
+              Start="0,0"
+              End="28.7714289728476,67.9000016408808">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.7000008204404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,33.7000008204404"
+                    Point2="0,37.7000008204404"
+                    Point3="4,37.7000008204404" />
+                  <mssgle:LineSegment
+                    End="24.7714289728476,37.7000008204404" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.7714289728476,37.7000008204404"
+                    Point2="28.7714289728476,37.7000008204404"
+                    Point3="28.7714289728476,41.7000008204404" />
+                  <mssgle:LineSegment
+                    End="28.7714289728476,67.9000016408808" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="552.657149121713,263.258821019829">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="-163.600005960465,119.858827218712"
+              Start="0,0"
+              End="-163.600005960465,112.358827218712">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.9294136093562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,55.9294136093562"
+                    Point2="0,59.9294136093562"
+                    Point3="-4,59.9294136093562" />
+                  <mssgle:LineSegment
+                    End="-159.600005960465,59.9294136093562" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-159.600005960465,59.9294136093562"
+                    Point2="-163.600005960465,59.9294136093562"
+                    Point3="-163.600005960465,63.9294136093562" />
+                  <mssgle:LineSegment
+                    End="-163.600005960465,112.358827218712" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="218.342857264499,172.764706257718">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="257.676196217699,-26.5058868787694"
+              Start="0,0"
+              End="257.676196217699,-19.0058868787694">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-9.25882970092008" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-9.25882970092008"
+                    Point2="0,-13.2588297009201"
+                    Point3="4,-13.2588297009201" />
+                  <mssgle:LineSegment
+                    End="253.676196217699,-13.2588297009201" />
+                  <mssgle:CubicBezierSegment
+                    Point1="253.676196217699,-13.2588297009201"
+                    Point2="257.676196217699,-13.2588297009201"
+                    Point3="257.676196217699,-17.2588297009201" />
+                  <mssgle:LineSegment
+                    End="257.676196217699,-19.0058868787694" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\VSQLSERVER Copy Trace Data to Reports">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="204,41.6"
+          Id="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting"
+          TopLeft="73.8571410665706,207.552941142152" />
+        <NodeLayout
+          Size="247.2,41.6"
+          Id="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace"
+          TopLeft="15.2857129622479,58" />
+        <EdgeLayout
+          Id="Package\VSQLSERVER Copy Trace Data to Reports.Paths[OLE DB Source Output]"
+          TopLeft="138.885712962248,99.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="36.9714281043227,107.952941142152"
+              Start="0,0"
+              End="36.9714281043227,100.452941142152">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.9764705710758" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.9764705710758"
+                    Point2="0,53.9764705710758"
+                    Point3="4,53.9764705710758" />
+                  <mssgle:LineSegment
+                    End="32.9714281043227,53.9764705710758" />
+                  <mssgle:CubicBezierSegment
+                    Point1="32.9714281043227,53.9764705710758"
+                    Point2="36.9714281043227,53.9764705710758"
+                    Point3="36.9714281043227,57.9764705710758" />
+                  <mssgle:LineSegment
+                    End="36.9714281043227,100.452941142152" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\VSQLSERVER Copy Trace Data to Reports\Consol Table for Reporting">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\VSQLSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\VREPORTSERVER Copy Trace Data to Reports">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="204.8,41.6"
+          Id="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting"
+          TopLeft="179,210" />
+        <NodeLayout
+          Size="247.2,41.6"
+          Id="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace"
+          TopLeft="15.2857129622479,58" />
+        <EdgeLayout
+          Id="Package\VREPORTSERVER Copy Trace Data to Reports.Paths[OLE DB Source Output]"
+          TopLeft="138.885712962248,99.6">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{x:Null}"
+              EndConnector="142.514287037752,110.4"
+              Start="0,0"
+              End="142.514287037752,102.9">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,51.2"
+                    Point2="0,55.2"
+                    Point3="4,55.2" />
+                  <mssgle:LineSegment
+                    End="138.514287037752,55.2" />
+                  <mssgle:CubicBezierSegment
+                    Point1="138.514287037752,55.2"
+                    Point2="142.514287037752,55.2"
+                    Point3="142.514287037752,59.2" />
+                  <mssgle:LineSegment
+                    End="142.514287037752,102.9" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\VREPORTSERVER Copy Trace Data to Reports\Consol Table for Reporting">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\VREPORTSERVER Copy Trace Data to Reports\Get montblXE_CPUReadsFilterTrace">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
