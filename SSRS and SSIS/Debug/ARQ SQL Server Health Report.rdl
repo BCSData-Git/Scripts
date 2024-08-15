@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report MustUnderstand="df" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:df="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition/defaultfontfamily">
+  <df:DefaultFontFamily>Segoe UI</df:DefaultFontFamily>
+  <AutoRefresh>0</AutoRefresh>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Subreport Name="PerfmonCountersDetailed">
+            <ReportName>Perfmon Counters Consol Detailed</ReportName>
+            <Top>3.26958in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.65625in</Height>
+            <Width>10.53125in</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="VSQSERVERErrors">
+            <ReportName>SQL Event Report RR-SQL01</ReportName>
+            <Top>6.01542in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.76042in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="DBInfo">
+            <ReportName>Database InfoV2</ReportName>
+            <Top>9.3418in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.76042in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport1">
+            <ReportName>Perfmon Counters Consolidated Weekly</ReportName>
+            <Top>2.33555in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.86458in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport2">
+            <ReportName>SQL Server Activity RR-SQL01</ReportName>
+            <Top>3.99527in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.89583in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport3">
+            <ReportName>SQL Servers</ReportName>
+            <Top>0.42583in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.875in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport6">
+            <ReportName>SQL Server UpTime</ReportName>
+            <Top>1.37027in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.89583in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport7">
+            <ReportName>SQL Server Blocking Dashboard RR-SQL01</ReportName>
+            <Top>10.17166in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.86458in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport9">
+            <ReportName>SQL Error Logs</ReportName>
+            <Top>11.0918in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.72917in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport10">
+            <ReportName>SQL Server Activity AWS-SQL04</ReportName>
+            <Top>4.94666in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.99932in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport11">
+            <ReportName>SQL Event Report AWS-SQL04</ReportName>
+            <Top>6.84528in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.85in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="DBInfo2">
+            <ReportName>Free Disk Space</ReportName>
+            <Top>7.76472in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.73542in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+          <Subreport Name="Subreport13">
+            <ReportName>DriveSpaceReportv2</ReportName>
+            <Top>8.54181in</Top>
+            <Left>0.14167in</Left>
+            <Height>0.68194in</Height>
+            <Width>10.53125in</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+            </Style>
+          </Subreport>
+        </ReportItems>
+        <Height>15.01958in</Height>
+        <Style />
+      </Body>
+      <Width>10.98334in</Width>
+      <Page>
+        <LeftMargin>1in</LeftMargin>
+        <RightMargin>1in</RightMargin>
+        <TopMargin>1in</TopMargin>
+        <BottomMargin>1in</BottomMargin>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>2d2da1c7-8ffa-4f3d-b40a-37dce2aa61bf</rd:ReportID>
+</Report>
